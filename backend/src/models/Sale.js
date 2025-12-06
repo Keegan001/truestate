@@ -35,6 +35,14 @@ const SaleSchema = new mongoose.Schema({
   employeeName: String
 });
 
+// Text Indexes for Search
 SaleSchema.index({ customerName: 'text', phoneNumber: 'text' });
+
+// Compound Indexes for Performance Optimization
+// These allow MongoDB to filter and sort without scanning the whole collection
+SaleSchema.index({ productCategory: 1, date: -1 });
+SaleSchema.index({ customerRegion: 1, date: -1 });
+SaleSchema.index({ gender: 1, date: -1 });
+SaleSchema.index({ paymentMethod: 1, date: -1 });
 
 module.exports = mongoose.model('Sale', SaleSchema);

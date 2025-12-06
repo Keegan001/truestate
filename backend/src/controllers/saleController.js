@@ -57,7 +57,6 @@ exports.getSales = async (req, res) => {
     if (sortOrder) {
       direction = sortOrder === 'asc' ? 1 : -1;
     } else {
-      // Default: Names A-Z, Numbers/Dates Descending
       direction = sortBy === 'customerName' ? 1 : -1;
     }
     sortOptions[dbSortKey] = direction;
@@ -67,8 +66,25 @@ exports.getSales = async (req, res) => {
     const limitNum = Number(limit);
     const skip = (pageNum - 1) * limitNum;
 
-    // 5. Execution: Get Data
+    // 5. Execution: Get Data with Projection
+    // Only fetch fields actually used by the Frontend to save bandwidth
+    const projection = {
+        _id: 1,
+        date: 1,
+        customerId: 1,
+        customerName: 1,
+        phoneNumber: 1,
+        gender: 1,
+        age: 1,
+        productCategory: 1,
+        productName: 1, 
+        quantity: 1,
+        totalAmount: 1,
+        tags: 1
+    };
+
     const sales = await Sale.find(query)
+      .select(projection)
       .sort(sortOptions)
       .skip(skip)
       .limit(limitNum);
