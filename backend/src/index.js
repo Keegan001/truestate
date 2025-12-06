@@ -11,9 +11,19 @@ app.use(cors());
 app.use(express.json());
 
 // Database Connection
+console.log("Attempting to connect to DB..."); // Debug log
+
+if (!process.env.MONGO_URI) {
+  console.error("FATAL ERROR: MONGO_URI is not defined.");
+  process.exit(1);
+}
+
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log('DB Connection Error:', err));
+  .then(() => console.log('MongoDB Connected Successfully'))
+  .catch(err => {
+    console.error('MongoDB Connection Error:', err);
+    // Do not exit process, let Render try to restart or log more errors
+  });
 
 // Routes
 app.use('/api/sales', saleRoutes);
