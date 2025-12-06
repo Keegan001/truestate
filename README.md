@@ -1,6 +1,6 @@
 # TruEstate Retail Sales Management System
 
-Live Deployment[(https://truestate-one.vercel.app/)]
+[Live Deployment](https://truestate-one.vercel.app/)
 
 ## 1. Overview
 A high-performance Retail Sales Dashboard designed to handle large datasets (1M+ records). It features advanced multi-select filtering, fuzzy search, real-time aggregation stats, and efficient server-side pagination. The system is optimized for speed using compound database indexing, server-side caching, and Gzip compression.
